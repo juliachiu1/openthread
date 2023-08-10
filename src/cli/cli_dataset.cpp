@@ -1380,6 +1380,59 @@ void Dataset::HandleDatasetUpdater(otError aError)
 
 #endif // OPENTHREAD_CONFIG_DATASET_UPDATER_ENABLE && OPENTHREAD_FTD
 
+
+// #if OPENTHREAD_ENABLE_CLI_CUSTOMIZED
+
+template <> otError Dataset::Process<Cmd("rotate")>(Arg aArgs[])
+{
+    otError error = OT_ERROR_NONE;
+    otOperationalDataset dataset;
+
+    // dataset clear
+    OT_UNUSED_VARIABLE(aArgs);
+    memset(&sDatasetTlvs, 0, sizeof(sDatasetTlvs));
+
+    // dataset init active
+    error = otDatasetGetActiveTlvs(GetInstancePtr(), &sDatasetTlvs);
+
+    // dataset networkkey <new_networkkey>
+    memset(&dataset, 0, sizeof(dataset));
+    SuccessOrExit(error = aArgs[0].ParseAsHexString(dataset.mNetworkKey.m8));
+    dataset.mComponents.mIsNetworkKeyPresent = true;
+    SuccessOrExit(error = otDatasetUpdateTlvs(&dataset, &sDatasetTlvs));
+
+    //dataset activetimestamp <int>
+    memset(&dataset, 0, sizeof(dataset));
+    SuccessOrExit(error = aArgs[1].ParseAsUint64(dataset.mActiveTimestamp.mSeconds));
+    dataset.mActiveTimestamp.mTicks               = 0;
+    dataset.mActiveTimestamp.mAuthoritative       = false;
+    dataset.mComponents.mIsActiveTimestampPresent = true;
+    SuccessOrExit(error = otDatasetUpdateTlvs(&dataset, &sDatasetTlvs));
+
+    //dataset pendingtimestamp <int>
+    memset(&dataset, 0, sizeof(dataset));
+    SuccessOrExit(error = aArgs[2].ParseAsUint64(dataset.mPendingTimestamp.mSeconds));
+    dataset.mPendingTimestamp.mTicks               = 0;
+    dataset.mPendingTimestamp.mAuthoritative       = false;
+    dataset.mComponents.mIsPendingTimestampPresent = true;
+    SuccessOrExit(error = otDatasetUpdateTlvs(&dataset, &sDatasetTlvs));
+
+    //dataset delay <ms>
+    memset(&dataset, 0, sizeof(dataset));
+    SuccessOrExit(error = aArgs[3].ParseAsUint32(dataset.mDelay));
+    dataset.mComponents.mIsDelayPresent = true;
+    SuccessOrExit(error = otDatasetUpdateTlvs(&dataset, &sDatasetTlvs));
+
+    //dataset commit pending
+    error = otDatasetSetPendingTlvs(GetInstancePtr(), &sDatasetTlvs);
+
+    return error;
+
+}
+//#endif
+
+
+
 otError Dataset::Process(Arg aArgs[])
 {
 #define CmdEntry(aCommandString)                               \
@@ -1406,6 +1459,7 @@ otError Dataset::Process(Arg aArgs[])
         CmdEntry("pending"),
         CmdEntry("pendingtimestamp"),
         CmdEntry("pskc"),
+        CmdEntry("rotate"),
         CmdEntry("securitypolicy"),
         CmdEntry("set"),
         CmdEntry("tlvs"),
