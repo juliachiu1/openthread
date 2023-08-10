@@ -36,6 +36,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <string>
+
 #include <openthread/dataset.h>
 #include <openthread/dataset_ftd.h>
 #include <openthread/dataset_updater.h>
@@ -1395,9 +1397,17 @@ template <> otError Dataset::Process<Cmd("rotate")>(Arg aArgs[])
     // dataset init active
     error = otDatasetGetActiveTlvs(GetInstancePtr(), &sDatasetTlvs);
 
+    std::string sNetworkKey = "439831820b6debe4512375d825ac8145";
+    char* cNetworkKey = new char[sNetworkKey.length() + 1];
+    strcpy(cNetworkKey, sNetworkKey.c_str());
+
+    Arg newNetworkKey;
+    newNetworkKey.SetCString(cNetworkKey);
+
     // dataset networkkey <new_networkkey>
     memset(&dataset, 0, sizeof(dataset));
-    SuccessOrExit(error = aArgs[0].ParseAsHexString(dataset.mNetworkKey.m8));
+    // SuccessOrExit(error = aArgs[0].ParseAsHexString(dataset.mNetworkKey.m8));
+    SuccessOrExit(error = newNetworkKey.ParseAsHexString(dataset.mNetworkKey.m8));
     dataset.mComponents.mIsNetworkKeyPresent = true;
     SuccessOrExit(error = otDatasetUpdateTlvs(&dataset, &sDatasetTlvs));
 
