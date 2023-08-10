@@ -1397,17 +1397,20 @@ template <> otError Dataset::Process<Cmd("rotate")>(Arg aArgs[])
     // dataset init active
     error = otDatasetGetActiveTlvs(GetInstancePtr(), &sDatasetTlvs);
 
-    std::string sNetworkKey = "439831820b6debe4512375d825ac8145";
-    char* cNetworkKey = new char[sNetworkKey.length() + 1];
-    strcpy(cNetworkKey, sNetworkKey.c_str());
+    // std::string sNetworkKey = "439831820b6debe4512375d825ac8145";
+    // char* cNetworkKey = new char[sNetworkKey.length() + 1];
+    // strcpy(cNetworkKey, sNetworkKey.c_str());
 
-    Arg newNetworkKey;
-    newNetworkKey.SetCString(cNetworkKey);
+    char cNetworkkey[] = { '4', '3', '9', '8', '3', '1', '8', '2', '0', 'b', '6', 'd', 'e', 'b', 'e', '4', '5', '1', '2', '3', '7', '5', 'd', '8', '2', '5', 'a', 'c', '8', '1', '4', '5', };
+    char* cPtr = cNetworkkey;
+
+    Arg nNetworkKey;
+    nNetworkKey.SetCString(cPtr);
 
     // dataset networkkey <new_networkkey>
     memset(&dataset, 0, sizeof(dataset));
     // SuccessOrExit(error = aArgs[0].ParseAsHexString(dataset.mNetworkKey.m8));
-    SuccessOrExit(error = newNetworkKey.ParseAsHexString(dataset.mNetworkKey.m8));
+    SuccessOrExit(error = nNetworkKey.ParseAsHexString(dataset.mNetworkKey.m8));
     dataset.mComponents.mIsNetworkKeyPresent = true;
     SuccessOrExit(error = otDatasetUpdateTlvs(&dataset, &sDatasetTlvs));
 
