@@ -1426,12 +1426,10 @@ template <> otError Dataset::Process<Cmd("rotate")>(Arg aArgs[])
     //dataset commit pending
     error = otDatasetSetPendingTlvs(GetInstancePtr(), &sDatasetTlvs);
 
+exit:
     return error;
-
 }
 //#endif
-
-
 
 otError Dataset::Process(Arg aArgs[])
 {
