@@ -35,7 +35,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <bits/stdc++.h>
 
 #include <openthread/dataset.h>
 #include <openthread/dataset_ftd.h>
@@ -1406,10 +1405,10 @@ template <> otError Dataset::Process<Cmd("rotate")>(Arg aArgs[])
     char cNetworkkey[32];
 
     srand(time(0));
-    
+
     for (int i = 0; i < 32; i++)
     {
-	    networkkey[i] = hexChar[rand() % 16];
+	    cNetworkkey[i] = hexChar[rand() % 16];
 	}
 
     char* cPtr = cNetworkkey;
