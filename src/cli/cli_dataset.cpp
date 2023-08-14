@@ -1402,19 +1402,32 @@ template <> otError Dataset::Process<Cmd("rotate")>(Arg aArgs[])
     char cNetworkkey[] = { '4', '3', '9', '8', '3', '1', '8', '2', '0', 'b', '6', 'd', 'e', 'b', 'e', '4', '5', '1', '2', '3', '7', '5', 'd', '8', '2', '5', 'a', 'c', '8', '1', '4', '5'};
     char* cPtr = cNetworkkey;
 
-    Arg nNetworkKey;
-    nNetworkKey.SetCString(cPtr);
+    char nTimestamp[] = { '7' };
+    char* tPtr = nTimestamp;
+
+    char nDelay[] = { '1', '2', '0', '0', '0', '0' };
+    char* dPtr = nDelay;
+
+    // Arg nNetworkKey;
+    // nNetworkKey.SetCString(cPtr);
+
+    Arg nArgs[4];
+    nArgs[0].SetCString(cPtr);
+    nArgs[1].SetCString(tPtr);
+    nArgs[2].SetCString(tPtr);
+    nArgs[3].SetCString(dPtr);
+
 
     // dataset networkkey <new_networkkey>
     memset(&dataset, 0, sizeof(dataset));
     // SuccessOrExit(error = aArgs[0].ParseAsHexString(dataset.mNetworkKey.m8));
-    SuccessOrExit(error = nNetworkKey.ParseAsHexString(dataset.mNetworkKey.m8));
+    SuccessOrExit(error = nArgs[0].ParseAsHexString(dataset.mNetworkKey.m8));
     dataset.mComponents.mIsNetworkKeyPresent = true;
     SuccessOrExit(error = otDatasetUpdateTlvs(&dataset, &sDatasetTlvs));
 
     //dataset activetimestamp <int>
     memset(&dataset, 0, sizeof(dataset));
-    SuccessOrExit(error = aArgs[1].ParseAsUint64(dataset.mActiveTimestamp.mSeconds));
+    SuccessOrExit(error = nArgs[1].ParseAsUint64(dataset.mActiveTimestamp.mSeconds));
     dataset.mActiveTimestamp.mTicks               = 0;
     dataset.mActiveTimestamp.mAuthoritative       = false;
     dataset.mComponents.mIsActiveTimestampPresent = true;
@@ -1422,7 +1435,7 @@ template <> otError Dataset::Process<Cmd("rotate")>(Arg aArgs[])
 
     //dataset pendingtimestamp <int>
     memset(&dataset, 0, sizeof(dataset));
-    SuccessOrExit(error = aArgs[2].ParseAsUint64(dataset.mPendingTimestamp.mSeconds));
+    SuccessOrExit(error = nArgs[2].ParseAsUint64(dataset.mPendingTimestamp.mSeconds));
     dataset.mPendingTimestamp.mTicks               = 0;
     dataset.mPendingTimestamp.mAuthoritative       = false;
     dataset.mComponents.mIsPendingTimestampPresent = true;
@@ -1430,7 +1443,7 @@ template <> otError Dataset::Process<Cmd("rotate")>(Arg aArgs[])
 
     //dataset delay <ms>
     memset(&dataset, 0, sizeof(dataset));
-    SuccessOrExit(error = aArgs[3].ParseAsUint32(dataset.mDelay));
+    SuccessOrExit(error = nArgs[3].ParseAsUint32(dataset.mDelay));
     dataset.mComponents.mIsDelayPresent = true;
     SuccessOrExit(error = otDatasetUpdateTlvs(&dataset, &sDatasetTlvs));
 
