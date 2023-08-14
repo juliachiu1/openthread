@@ -35,6 +35,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include <openthread/dataset.h>
 #include <openthread/dataset_ftd.h>
