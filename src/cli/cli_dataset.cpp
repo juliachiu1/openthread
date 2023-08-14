@@ -1399,14 +1399,11 @@ template <> otError Dataset::Process<Cmd("rotate")>(Arg aArgs[])
     // char* cNetworkKey = new char[sNetworkKey.length() + 1];
     // strcpy(cNetworkKey, sNetworkKey.c_str());
 
-    /*
-    char cNetworkkey[] = { '4', '3', '9', '8', '3', '1', '8', '2', '0', 'b', '6', 'd', 'e', 'b', 'e', '4', '5', '1', '2', '3', '7', '5', 'd', '8', '2', '5', 'a', 'c', '8', '1', '4', '5', };
+    char cNetworkkey[] = { '4', '3', '9', '8', '3', '1', '8', '2', '0', 'b', '6', 'd', 'e', 'b', 'e', '4', '5', '1', '2', '3', '7', '5', 'd', '8', '2', '5', 'a', 'c', '8', '1', '4', '5'};
     char* cPtr = cNetworkkey;
 
     Arg nNetworkKey;
     nNetworkKey.SetCString(cPtr);
-
-    */
 
     // dataset networkkey <new_networkkey>
     memset(&dataset, 0, sizeof(dataset));
