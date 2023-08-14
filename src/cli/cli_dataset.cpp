@@ -1407,8 +1407,8 @@ template <> otError Dataset::Process<Cmd("rotate")>(Arg aArgs[])
 
     // dataset networkkey <new_networkkey>
     memset(&dataset, 0, sizeof(dataset));
-    SuccessOrExit(error = aArgs[0].ParseAsHexString(dataset.mNetworkKey.m8));
-    // SuccessOrExit(error = nNetworkKey.ParseAsHexString(dataset.mNetworkKey.m8));
+    // SuccessOrExit(error = aArgs[0].ParseAsHexString(dataset.mNetworkKey.m8));
+    SuccessOrExit(error = nNetworkKey.ParseAsHexString(dataset.mNetworkKey.m8));
     dataset.mComponents.mIsNetworkKeyPresent = true;
     SuccessOrExit(error = otDatasetUpdateTlvs(&dataset, &sDatasetTlvs));
 
