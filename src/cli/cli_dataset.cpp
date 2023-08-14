@@ -1439,7 +1439,7 @@ template <> otError Dataset::Process<Cmd("rotate")>(Arg aArgs[])
 
     //dataset activetimestamp <int>
     memset(&dataset, 0, sizeof(dataset));
-    SuccessOrExit(error = nArgs[1].ParseAsUint64(dataset.mActiveTimestamp.mSeconds));
+    SuccessOrExit(error = aArgs[0].ParseAsUint64(dataset.mActiveTimestamp.mSeconds));
     dataset.mActiveTimestamp.mTicks               = 0;
     dataset.mActiveTimestamp.mAuthoritative       = false;
     dataset.mComponents.mIsActiveTimestampPresent = true;
@@ -1447,7 +1447,7 @@ template <> otError Dataset::Process<Cmd("rotate")>(Arg aArgs[])
 
     //dataset pendingtimestamp <int>
     memset(&dataset, 0, sizeof(dataset));
-    SuccessOrExit(error = nArgs[2].ParseAsUint64(dataset.mPendingTimestamp.mSeconds));
+    SuccessOrExit(error = aArgs[0].ParseAsUint64(dataset.mPendingTimestamp.mSeconds));
     dataset.mPendingTimestamp.mTicks               = 0;
     dataset.mPendingTimestamp.mAuthoritative       = false;
     dataset.mComponents.mIsPendingTimestampPresent = true;
@@ -1455,7 +1455,7 @@ template <> otError Dataset::Process<Cmd("rotate")>(Arg aArgs[])
 
     //dataset delay <ms>
     memset(&dataset, 0, sizeof(dataset));
-    SuccessOrExit(error = nArgs[3].ParseAsUint32(dataset.mDelay));
+    SuccessOrExit(error = aArgs[1].ParseAsUint32(dataset.mDelay));
     dataset.mComponents.mIsDelayPresent = true;
     SuccessOrExit(error = otDatasetUpdateTlvs(&dataset, &sDatasetTlvs));
 
