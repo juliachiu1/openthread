@@ -35,6 +35,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <bits/stdc++.h>
 
 #include <openthread/dataset.h>
 #include <openthread/dataset_ftd.h>
@@ -1399,7 +1400,18 @@ template <> otError Dataset::Process<Cmd("rotate")>(Arg aArgs[])
     // char* cNetworkKey = new char[sNetworkKey.length() + 1];
     // strcpy(cNetworkKey, sNetworkKey.c_str());
 
-    char cNetworkkey[] = { '4', '3', '9', '8', '3', '1', '8', '2', '0', 'b', '6', 'd', 'e', 'b', 'e', '4', '5', '1', '2', '3', '7', '5', 'd', '8', '2', '5', 'a', 'c', '8', '1', '4', '5'};
+    char hexChar[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+
+    // char cNetworkkey[] = { '4', '3', '9', '8', '3', '1', '8', '2', '0', 'b', '6', 'd', 'e', 'b', 'e', '4', '5', '1', '2', '3', '7', '5', 'd', '8', '2', '5', 'a', 'c', '8', '1', '4', '5'};
+    char cNetworkkey[32];
+
+    srand(time(0));
+    
+    for (int i = 0; i < 32; i++)
+    {
+	    networkkey[i] = hexChar[rand() % 16];
+	}
+
     char* cPtr = cNetworkkey;
 
     char nTimestamp[] = { '7' };
